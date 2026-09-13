@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .comments import CommentScanning
-from .cursor import Cursor, is_ascii_letter
+from .cursor import Cursor, is_ascii_digit, is_ascii_letter
 from .identifiers import IdentifierScanning
 from .models import LexicalError, Token
 from .numbers import NumberScanning
@@ -48,7 +48,7 @@ class PrologLexer(
         while self._peek():
             ch = self._peek()
 
-            if ch.isspace():
+            if ch in " \t\r\n":
                 self._advance()
                 continue
 
@@ -78,7 +78,7 @@ class PrologLexer(
                 )
                 continue
 
-            if ch.isdigit():
+            if is_ascii_digit(ch):
                 self._scan_number()
                 continue
 

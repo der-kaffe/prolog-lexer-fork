@@ -10,7 +10,7 @@ Reconoce:
 - variables y variable anónima `_`;
 - enteros y reales;
 - cadenas entre comillas dobles;
-- operadores `:-`, `?-`, `-->`, `=`, `\=`, `==`, `\==`, `=..`, `<`, `=<`, `>`, `>=`, `+`, `-`, `*`, `/`, `//`, `**`, `is`, `mod`, `\+`, `!`, `;`;
+- operadores `:-`, `?-`, `-->`, `=`, `\=`, `==`, `\==`, `=..`, `<`, `=<`, `>`, `>=`, `+`, `-`, `*`, `/`, `//`, `**`, `is`, `mod`, `\+`, `!`, `;`, `:`;
 - coma y delimitadores `()[]{ }|.`;
 - comentarios `% ...` y `/* ... */`;
 - espacios en blanco, preservando línea y columna.
@@ -26,7 +26,7 @@ El proyecto **no** realiza análisis sintáctico, semántico, unificación, reso
 5. La máxima coincidencia se implementa probando primero los operadores de mayor longitud.
 6. Los comentarios de bloque se ignoran y se admite anidamiento.
 7. La tabla de lexemas registra sin duplicados átomos, variables (excepto `_`) y literales.
-8. Átomos, variables y números se restringen a ASCII puro (`[A-Za-z0-9_]`). Una letra acentuada o `ñ` fuera de un átomo citado o cadena corta el identificador y se reporta como `CARACTER_NO_ADMITIDO`; dentro de comillas simples o dobles cualquier carácter es válido.
+8. Átomos y variables se restringen al alfabeto ASCII (`[A-Za-z0-9_]`) y los números a dígitos ASCII (`[0-9]`). Una letra acentuada o `ñ` fuera de un átomo citado o cadena corta el identificador y se reporta como `CARACTER_NO_ADMITIDO`; dentro de comillas simples o dobles cualquier carácter es válido.
 
 ## Ejecución
 

@@ -11,9 +11,12 @@
 | CADENA | `"([^"\\\n]|\\.)*"` | `"hola"` |
 | OP_REGLA | `:-` | `:-` |
 | OP_CONSULTA | `\?-` | `?-` |
+| OP_DCG | `-->` | `-->` |
 | OP_UNIFICACION/COMPARACION | lista finita | `=`, `\=`, `==`, `\==`, `=..`, `<`, `=<`, `>`, `>=` |
 | OP_ARITMETICO | lista finita | `+`, `-`, `*`, `/`, `//`, `**`, `is`, `mod` |
-| OP_CONTROL | lista finita | `\+`, `!`, `;`, `,` |
+| OP_CONTROL | lista finita | `\+`, `!`, `;` |
+| DOS_PUNTOS | `:` | `:` |
+| COMA | `,` | `,` |
 | DELIMITADOR | `[()\[\]{}|.]` | `(`, `]`, `|`, `.` |
 | COMENTARIO_LINEA | `%[^\n]*` | `% comentario` |
 | COMENTARIO_BLOQUE | `/* ... */` | `/* comentario */` |

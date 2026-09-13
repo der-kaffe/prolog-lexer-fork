@@ -25,6 +25,10 @@ def is_ascii_letter(ch: str) -> bool:
     return ch != "" and ch in ASCII_LETTERS
 
 
+def is_ascii_digit(ch: str) -> bool:
+    return ch != "" and ch in ASCII_DIGITS
+
+
 def is_ascii_alnum(ch: str) -> bool:
     return ch != "" and ch in ASCII_ALNUM
 

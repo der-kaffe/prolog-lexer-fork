@@ -48,6 +48,52 @@ class LexerFocusedTests(unittest.TestCase):
             ["NUMERO_ENTERO", "PUNTO", "NUMERO_REAL", "PUNTO"],
         )
 
+    def test_ascii_numbers_and_whitespace(self):
+        _, tokens, errors = self.lex("25 3.14")
+        self.assertEqual(errors, [])
+        self.assertEqual([t.tipo for t in tokens], ["NUMERO_ENTERO", "NUMERO_REAL"])
+
+        _, tokens, errors = self.lex("a \t\r\n b.")
+        self.assertEqual(errors, [])
+        self.assertEqual([t.tipo for t in tokens], ["ATOMO", "ATOMO", "PUNTO"])
+
+    def test_unicode_digits_are_not_numbers(self):
+        cases = [
+            ("١٢", [], ["١", "٢"]),
+            ("１２", [], ["１", "２"]),
+            ("²", [], ["²"]),
+            ("٣.١٤", ["PUNTO"], ["٣", "١", "٤"]),
+        ]
+        for text, token_types, error_fragments in cases:
+            with self.subTest(text=text):
+                _, tokens, errors = self.lex(text)
+                self.assertEqual(
+                    [t.tipo for t in tokens],
+                    token_types,
+                )
+                self.assertNotIn("NUMERO_ENTERO", [t.tipo for t in tokens])
+                self.assertNotIn("NUMERO_REAL", [t.tipo for t in tokens])
+                self.assertEqual(
+                    [error.tipo for error in errors],
+                    ["CARACTER_NO_ADMITIDO"] * len(error_fragments),
+                )
+                self.assertEqual(
+                    [error.fragmento for error in errors],
+                    error_fragments,
+                )
+
+    def test_unicode_whitespace_is_not_ignored(self):
+        _, tokens, errors = self.lex("a.\u2003X.")
+        self.assertEqual(
+            [t.tipo for t in tokens],
+            ["ATOMO", "PUNTO", "VARIABLE", "PUNTO"],
+        )
+        self.assertEqual([t.lexema for t in tokens], ["a", ".", "X", "."])
+        self.assertEqual(len(errors), 1)
+        self.assertEqual(errors[0].tipo, "CARACTER_NO_ADMITIDO")
+        self.assertEqual(errors[0].fragmento, "\u2003")
+        self.assertEqual((errors[0].linea, errors[0].columna), (1, 3))
+
     def test_sign_is_operator(self):
         _, tokens, errors = self.lex("-25 +3")
         self.assertEqual(errors, [])
